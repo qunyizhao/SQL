@@ -1,0 +1,5 @@
+Basic SELECT:
+
+SELECT    * 
+FROM      City 
+WHERE     COUNTRYCODE = 'JPN';
