@@ -49,3 +49,73 @@ SELECT      sell_date,
 FROM        Activities
 GROUP BY    sell_date
 ORDER BY    sell_date
+
+
+## Using LEFT JOIN twice and USING (), UNION
+### Method1
+WITH t1 AS
+(
+SELECT      *
+FROM        Employees
+LEFT JOIN   Salaries
+USING       (employee_id)
+UNION
+SELECT      *
+FROM        Salaries
+LEFT JOIN   Employees
+USING       (employee_id)
+)
+SELECT      employee_id
+FROM        t1
+WHERE       name IS NULL OR salary IS NULL
+ORDER BY    employee_id ASC;
+
+###Method 2:
+Select e.employee_id from Employees e 
+LEFT JOIN Salaries s 
+ON e.employee_id = s.employee_id
+WHERE s.salary  is NULL
+
+UNION
+
+Select s.employee_id from Salaries s
+LEFT JOIN Employees e 
+ON e.employee_id = s.employee_id
+WHERE e.name is NULL
+
+ORDER BY employee_id;
+
+
+### UNION from three columns
+SELECT      product_id,
+            'store1' AS store,
+            store1 AS price
+FROM        Products
+WHERE       store1 IS NOT NULL
+
+UNION
+
+SELECT      product_id,
+            'store2' AS store,
+            store2 AS price
+FROM        Products
+WHERE       store2 IS NOT NULL
+
+UNION
+
+SELECT      product_id,
+            'store3' AS store,
+            store3 AS price
+FROM        Products
+WHERE       store3 IS NOT NULL;
+
+## get YEAR from a Datetime
+# Write your MySQL query statement below
+SELECT      user_id,
+            MAX(time_stamp) AS last_stamp
+FROM        Logins
+WHERE       YEAR(time_stamp) = 2020
+GROUP BY    user_id;
+
+
+
