@@ -35,3 +35,16 @@ SELECT
     SUM(duration) AS total_duration
 FROM Calls
 GROUP BY person1, person2
+
+
+### Aggregate function: SUM(CASE WHEN ELSE END)
+### Report the difference between the number of apples and oranges sold each day.
+SELECT      sale_date,
+            SUM(CASE
+               WHEN fruit = 'apples' THEN sold_num
+               ELSE -sold_num
+               END) AS diff
+FROM        Sales
+GROUP BY    sale_date
+ORDER BY    sale_date
+
